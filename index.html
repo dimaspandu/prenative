@@ -14,9 +14,13 @@
         <Components>
             <!-- NAV COMPONENT -->
             <div id="Nav" style="padding: 16px; text-align: center;">
-                <a href="#">Stage</a>
-                <a href="#">About</a>
-                <a href="#">Developer</a>
+                <a href="#/stage">Stage</a>
+                <a href="#/vacant">Vacant</a>
+            </div>
+
+            <!-- NOTIFY COMPONENT -->
+            <div id="Notify" style="padding: 16px; font-size: 14px; color: #959595; text-align: center;">
+                Ada Monster...
             </div>
 
             <!-- FOOTER COMPONENT -->
@@ -39,9 +43,18 @@
                 </div>
                 <Component id="Footer"></Component>
             </StageLayout>
+
+            <!-- VACANT LAYOUT -->
+            <VacantLayout>
+                <Component id="Notify"></Component>
+            </VacantLayout>
         </Layout>
 
         <script>
+            //ACTIVITY
+            Activity = document.location.href.split('/');
+            Activity = Activity[Activity.length - 1];
+
             //STAGE ACTIVITY
             var StageActivity = function (){ var Extend = new App();
                 Extend.OnCreate =  function (){
@@ -55,7 +68,34 @@
                 return Extend;
             };
 
-            Export(StageActivity);
+            //VACANT ACTIVITY
+            var VacantActivity = function (){ var Extend = new App();
+                Extend.OnCreate =  function (){
+                    this.SetView(this.InstallLayout("VacantLayout"));
+                }
+
+                return Extend;
+            };
+
+            //ROUTE
+            var Route = [
+                {
+                    Activity: "index.html",
+                    Export: StageActivity
+                },
+                {
+                    Activity: "stage",
+                    Export: VacantActivity
+                }
+            ];
+
+            //TESTING
+            if(Activity === "" || Activity === "index.html" || Activity === "stage"){
+                Export(StageActivity);
+            }
+            else if(Activity === "vacant"){
+                Export(VacantActivity);
+            }
         </script>
     </body>
 </html>
