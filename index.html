@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="theme-color" content="#bdbdbd">
+        <meta name="msapplication-navbutton-color" content="#bdbdbd">
+        <meta name="apple-mobile-web-app-status-bar-style" content="#bdbdbd">
+        <title>Prenative</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0" />
+        <style>body { font-family: sans-serif; font-size: 16px; font-weight: 600; }</style>
+        <script type="text/javascript" src="prenative.js"></script>
+    </head>
+    <body>
+        <Components>
+            <!-- NAV COMPONENT -->
+            <div id="Nav" style="padding: 16px; text-align: center;">
+                <a href="#">Stage</a>
+                <a href="#">About</a>
+                <a href="#">Developer</a>
+            </div>
+
+            <!-- FOOTER COMPONENT -->
+            <div id="Footer" style="padding: 16px; font-size: 14px; color: #959595; text-align: center;">
+                Prenative &copy 2017
+            </div>
+        </Components>
+
+        <Layout>
+            <!-- STAGE LAYOUT -->
+            <StageLayout>
+                <Component id="Nav"></Component>
+                <div style="padding: 16px; border: solid 1px #bdbdbd; border-radius: 2.8px;">
+                    <h1 id="Title">
+                        Loading...
+                    </h1>
+                    <div id="Message">
+                        Loading...
+                    </div>
+                </div>
+                <Component id="Footer"></Component>
+            </StageLayout>
+        </Layout>
+
+        <script>
+            //STAGE ACTIVITY
+            var StageActivity = function (){ var Extend = new App();
+                Extend.OnCreate =  function (){
+                    this.SetView(this.InstallLayout("StageLayout"));
+                    var Title = this.FindById("Title");
+                    var Message = this.FindById("Message");
+                    Title.innerHTML = "Pre Native";
+                    Message.innerHTML = "Welcome to my World!";
+                }
+
+                return Extend;
+            };
+
+            Export(StageActivity);
+        </script>
+    </body>
+</html>
