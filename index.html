@@ -14,13 +14,13 @@
         <Components>
             <!-- NAV COMPONENT -->
             <div id="Nav" style="padding: 16px; text-align: center;">
-                <a href="#/stage">Stage</a>
-                <a href="#/vacant">Vacant</a>
+                <a href="stage">Stage</a>
+                <a href="vacant">Vacant</a>
             </div>
 
             <!-- NOTIFY COMPONENT -->
             <div id="Notify" style="padding: 16px; font-size: 14px; color: #959595; text-align: center;">
-                Ada Monster...
+                Roarrrrrrr...
             </div>
 
             <!-- FOOTER COMPONENT -->
@@ -103,18 +103,22 @@
             var Route = [
                 {
                     Activity: "index.html",
+                    Title: "Prenative",
                     Export: StageActivity
                 },
                 {
                     Activity: "stage",
+                    Title: "Stage",
                     Export: StageActivity
                 },
                 {
                     Activity: "vacant",
+                    Title: "Monster",
                     Export: VacantActivity
                 },
                 {
                     Activity: "error",
+                    Title: "Error",
                     Export: ErrorActivity
                 }
             ];
@@ -142,7 +146,31 @@
                 var Cable = document.getElementsByTagName("a");
 
                 for(var C = 0; C<Cable.length; C++){
-                    console.log(Cable[C]);
+                    Cable[C].addEventListener("click", function (Status){
+                        Status.preventDefault();
+
+                        var Direction = this.getAttribute("href").toString();
+
+                        if(Direction === "./"){
+                            Direction = "";
+                        }
+
+                        if(Direction.split("./")[1] !== undefined){
+                            Direction = Direction.split("./")[1].toString();
+                        }
+
+                        if(Direction.split("?")[1] !== undefined){
+                            Direction = Direction.split("?")[0].toString();
+                        }
+
+                        for(var R = 0; R<Route.length; R++){
+                            if(Route[R].Activity === Direction){
+                                /*window.history.pushState(Route[R], Route[R].Title, Direction);*/
+                                /*Export(Route[R].Export);*/
+                                console.log(Route[R].Export);
+                            }
+                        }
+                    });
                 }
             };
 
