@@ -6,7 +6,7 @@ AUTHOR: Dimas Pratama
 "use strict";
 
 var App = function (){
-    this.InstallLayout = function (Tag){
+    this.GetView = function (Tag){
         var Tag = document.getElementsByTagName(Tag);
         var Render = "";
 

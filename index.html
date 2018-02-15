@@ -29,7 +29,7 @@
             </div>
         </Components>
 
-        <Layout>
+        <Layouts>
             <!-- STAGE LAYOUT -->
             <StageLayout>
                 <Component id="Nav"></Component>
@@ -48,7 +48,14 @@
             <VacantLayout>
                 <Component id="Notify"></Component>
             </VacantLayout>
-        </Layout>
+
+            <!-- ERROR LAYOUT -->
+            <ErrorLayout>
+                <div>
+                    <h1>Page Not Found.</h1>
+                </div>
+            </ErrorLayout>
+        </Layouts>
 
         <script>
             //ACTIVITY
@@ -56,9 +63,11 @@
             Activity = Activity[Activity.length - 1];
 
             //STAGE ACTIVITY
-            var StageActivity = function (){ var Extend = new App();
+            var StageActivity = function (){
+                var Extend = new App();
+
                 Extend.OnCreate =  function (){
-                    this.SetView(this.InstallLayout("StageLayout"));
+                    this.SetView(this.GetView("StageLayout"));
                     var Title = this.FindById("Title");
                     var Message = this.FindById("Message");
                     Title.innerHTML = "Pre Native";
@@ -69,10 +78,23 @@
             };
 
             //VACANT ACTIVITY
-            var VacantActivity = function (){ var Extend = new App();
+            var VacantActivity = function (){
+                var Extend = new App();
+
                 Extend.OnCreate =  function (){
-                    this.SetView(this.InstallLayout("VacantLayout"));
+                    this.SetView(this.GetView("VacantLayout"));
                 }
+
+                return Extend;
+            };
+
+            //ERROR ACTIVITY
+            var ErrorActivity = function (){
+                var Extend = new App();
+
+                Extend.OnCreate = function (){
+                    this.SetView(this.GetView("ErrorLayout"));
+                };
 
                 return Extend;
             };
@@ -85,17 +107,47 @@
                 },
                 {
                     Activity: "stage",
+                    Export: StageActivity
+                },
+                {
+                    Activity: "vacant",
                     Export: VacantActivity
+                },
+                {
+                    Activity: "error",
+                    Export: ErrorActivity
                 }
             ];
 
-            //TESTING
-            if(Activity === "" || Activity === "index.html" || Activity === "stage"){
-                Export(StageActivity);
-            }
-            else if(Activity === "vacant"){
-                Export(VacantActivity);
-            }
+            //MATRIX
+            var Matrix = function (Route){
+                var Route = Route;
+                var RouteTail = Route.length - 1;
+                var Indexing = false;
+
+                for(var R = 0; R<Route.length; R++){
+                    if(Route[R].Activity === Activity){
+                        Export(Route[R].Export);
+
+                        Indexing = true;
+                    }
+                }
+
+                if(Indexing === false){
+                    Export(Route[RouteTail].Export);
+                }
+            };
+
+            var Network = function (){
+                var Cable = document.getElementsByTagName("a");
+
+                for(var C = 0; C<Cable.length; C++){
+                    console.log(Cable[C]);
+                }
+            };
+
+            Matrix(Route);
+            Network();
         </script>
     </body>
 </html>
